@@ -2,6 +2,23 @@ import React, { Component } from 'react'
 import TaskPomodoros from './TaskPomodoros'
 import { OPEN, FINISHED } from '../../constants/taskStatuses'
 
+function convertMS (milliseconds) {
+  var day, hour, minute, seconds
+  seconds = Math.floor(milliseconds / 1000)
+  minute = Math.floor(seconds / 60)
+  seconds = seconds % 60
+  hour = Math.floor(minute / 60)
+  minute = minute % 60
+  day = Math.floor(hour / 24)
+  hour = hour % 24
+
+  let timeStrg = day !== 0 ? day + 'd ' : ''
+  timeStrg += hour !== 0 ? hour + 'h ' : ''
+  timeStrg += minute + 'm - '
+  timeStrg += seconds + 's'
+  return timeStrg
+}
+
 export default class TaskRow extends Component {
   constructor () {
     super(...arguments)
@@ -33,7 +50,7 @@ export default class TaskRow extends Component {
 
         <p
           className='task-name'>
-          {this.props.task.description}
+          {this.props.task.description} - ( {convertMS(this.props.task.totalTime)} )
         </p>
 
         <TaskPomodoros

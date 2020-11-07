@@ -25,7 +25,12 @@ function startPomodoro (task, now) {
 }
 
 function finishPomodoro (task, now) {
+  let totalTime = 0
   let pomodoros = task.pomodoros.map(pomodoro => {
+    let d1 = new Date(pomodoro.startedAt)
+    let d2 = typeof pomodoro.finishedAt !== 'undefined' && pomodoro.finishedAt !== null ? new Date(pomodoro.finishedAt) : new Date()
+    totalTime = totalTime + Math.abs(d2 - d1)
+
     if (pomodoro.running) {
       return {
         ...pomodoro,
@@ -39,6 +44,7 @@ function finishPomodoro (task, now) {
 
   return {
     ...task,
+    totalTime,
     pomodoros: pomodoros,
     status: taskStatuses.OPEN
   }
@@ -53,6 +59,7 @@ function listWithNewTask (state, currentListID, data) {
         addedAt: data.now,
         status: taskStatuses.OPEN,
         listID: currentListID,
+        totalTime: 0,
         pomodoros: []
       }])
   )
