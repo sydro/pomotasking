@@ -23,7 +23,7 @@
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-standard": "^2.0.1",
     "file-loader": "^0.10.0",
-    "fontgen-loader": "^0.2.1",
+    "fontgen-loader": "0.2.1",
     "fs-extra": "^0.30.0",
     "html-webpack-plugin": "2.24.1",
     "jest": "^19.0.2",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import NewTaskForm from './NewTaskForm'
 import Task from './Task'
+import { convertMS } from '../../utils/presentDuration'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 
 let Element = SortableElement(({task, actions}) =>
@@ -41,6 +42,20 @@ export default class Tasks extends Component {
     }
   }
 
+  downloadCsvReport = () => {
+    let content = this.props.finishedTasks.map(t => {
+      let start = new Date(t.addedAt)
+      let stop = new Date(t.finishedAt)
+      return '"' + t.description + '","' + convertMS(t.totalTime) + '","' + t.totalTime + '","' + start.toLocaleDateString() + ' ' + start.toLocaleTimeString() + '","' + stop.toLocaleDateString() + ' ' + stop.toLocaleTimeString() + '"'
+    })
+    const element = document.createElement('a')
+    const file = new Blob(['"description","HumanTotalTime","totalTime","Added","Finished"\r\n', content.join('\r\n')], {type: 'text/plain'})
+    element.href = URL.createObjectURL(file)
+    element.download = 'report.csv'
+    document.body.appendChild(element)
+    element.click()
+  }
+
   renderBody () {
     return (
       <div>
@@ -69,11 +84,20 @@ export default class Tasks extends Component {
   renderFinishedList () {
     if (!this.state.showingFinished) { return }
 
-    return this.props.finishedTasks.map(task =>
+    let items = this.props.finishedTasks.map(task =>
       <Task
         key={`finished-task-${task.id}`}
         task={task}
         actions={this.props.actions} />
+    )
+
+    return (
+      <div key='finishedTasks'>
+        <div className='tasks-list-finished-separator'>
+          <button onClick={this.downloadCsvReport}>CSV Report</button>
+        </div>
+        {items}
+      </div>
     )
   }
 
