@@ -3,6 +3,11 @@ export function getLists () {
   return lists
 }
 
+export function getArchivedLists () {
+  let lists = JSON.parse(window.localStorage.getItem(`lists`)) || []
+  let archivedLists = lists.sort((a, b) => new Date(b.archived_at).getTime() - new Date(a.archived_at).getTime()).filter(l => l.archived === true)
+  return archivedLists
+}
 export function deleteList (listID) {
   let lists = getLists()
 

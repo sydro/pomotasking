@@ -9,6 +9,7 @@ export default class TaskListLink extends PureComponent {
     this.choose = this.props.actions.choose.bind(null, this.props.data.id)
     this.startEdit = this.props.actions.startEdit.bind(null, this.props.data.id)
     this.destroy = this.destroy.bind(this)
+    this.archive = this.archive.bind(this)
   }
 
   onBlur (evt) {
@@ -36,6 +37,10 @@ export default class TaskListLink extends PureComponent {
 
   destroy () {
     this.props.actions.destroy(this.props.data.id)
+  }
+
+  archive () {
+    this.props.actions.archive(this.props.data.id, true)
   }
 
   className () {
@@ -93,6 +98,13 @@ export default class TaskListLink extends PureComponent {
             className='destroy'
             onClick={this.destroy}>
             Remove
+          </button>
+          &nbsp;
+          <button
+            type='button'
+            className='archive'
+            onClick={this.archive}>
+            Archive
           </button>
         </div>
       </div>

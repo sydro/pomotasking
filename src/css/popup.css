@@ -97,6 +97,10 @@ input:focus, textarea:focus, button:focus, a:focus {
   content: '\f103';
 }
 
+.list-link-controls .archive:before {
+  content: '\f101';
+}
+
 .list-link-controls button {
   font-size: 14px;
   width: 14px;
@@ -550,4 +554,50 @@ input:focus, textarea:focus, button:focus, a:focus {
   text-align: center;
   top: 45%;
   margin: 0;
+}
+
+
+.main-archived {
+  color: #fff;
+  background: #4985c9;
+  font-weight: lighter;
+  font-size: 12px;
+  line-height: 50px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.archived-list-container {
+  width: 100%;
+  overflow: scroll;
+  position: absolute;
+}
+
+.archived-list {
+  padding: 10px;
+  position: relative;
+  width: 92%;
+}
+
+.archived-row { 
+  display: flex;
+  width: 100%;
+  background: #f6f6f6;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #E6E6E6;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.archive-controls {
+  width: 8%;
+  padding-top: 12px;
+  box-shadow: -5px 5px 30px #f6f6f6;
+  background: #f6f6f6;
+}
+
+
+.task-control-button.archive:before {
+  content: '\f101';
 }

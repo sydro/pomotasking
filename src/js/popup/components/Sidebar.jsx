@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TaskListLink from './TaskListLink'
-import { TODAYS_POMODORO_LIST } from '../../constants/misc'
+import { TODAYS_POMODORO_LIST, ARCHIVED_LIST } from '../../constants/misc'
 
 export default class Sidebar extends Component {
   render () {
@@ -39,11 +39,28 @@ export default class Sidebar extends Component {
     )
   }
 
+  renderArchived () {
+    let className = 'list-link'
+
+    if (this.props.currentListID === ARCHIVED_LIST) {
+      className += ' active'
+    }
+
+    return (
+      <div className={className}>
+        <a onClick={() => this.props.actions.choose(ARCHIVED_LIST)}>
+          Archived
+        </a>
+      </div>
+    )
+  }
+
   renderBody () {
     if (this.props.lists.length) {
       return (
         <div>
           {this.renderTodaysPomodoroLink()}
+          {this.renderArchived()}
           {this.renderLists()}
         </div>
       )
@@ -53,7 +70,7 @@ export default class Sidebar extends Component {
   }
 
   renderLists () {
-    return this.props.lists.map((list) => {
+    return this.props.lists.filter(l => l.archived !== true).map((list) => {
       return (
         <TaskListLink
           data={list}

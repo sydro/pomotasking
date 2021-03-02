@@ -47,6 +47,40 @@ export function submitEdit (id) {
   }
 }
 
+export function archive (id, status) {
+  return function (dispatch, getStore) {
+    let editedList = getStore().lists.find(list => list.id === id)
+    editedList.archived = status
+    editedList.archived_at = new Date().getTime()
+
+    dispatch({
+      type: actions.SUBMIT_EDIT_TASK_LIST,
+      id
+    })
+
+    editedList = getStore().lists.find(list => list.id === id)
+
+    listsRepository.persistList(editedList)
+  }
+}
+
+export function dearchive (id) {
+  return function (dispatch, getStore) {
+    let editedList = getStore().lists.find(list => list.id === id)
+    editedList.archived = false
+    editedList.archived_at = null
+
+    dispatch({
+      type: actions.SUBMIT_EDIT_TASK_LIST,
+      id
+    })
+
+    editedList = getStore().lists.find(list => list.id === id)
+
+    listsRepository.persistList(editedList)
+  }
+}
+
 export function update (id, data) {
   return {
     type: actions.UPDATE_TASK_LIST,
