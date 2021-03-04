@@ -599,5 +599,5 @@ input:focus, textarea:focus, button:focus, a:focus {
 
 
 .task-control-button.archive:before {
-  content: '\f101';
+  content: '\f10b';
 }
